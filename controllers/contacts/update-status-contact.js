@@ -4,8 +4,12 @@ const { createHttpException } = require("../../helpers");
 const updateStatusContact = async (req, res, next) => {
   const { contactId } = req.params;
   const { favorite } = req.body;
+  const { _id } = req.user;
   const result = await ContactModel.findByIdAndUpdate(
-    contactId,
+    {
+      _id: contactId,
+      owner: _id,
+    },
     { favorite },
     {
       new: true,

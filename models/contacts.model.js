@@ -23,13 +23,13 @@ const contactsSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "users",
+    },
   },
   {
     versionKey: false,
-    timestamps: {
-      updatedAt: false,
-      createdAt: false,
-    },
   }
 );
 
