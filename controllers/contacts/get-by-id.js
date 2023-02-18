@@ -3,7 +3,11 @@ const { createHttpException } = require("../../helpers");
 
 const getById = async (req, res, next) => {
   const { contactId } = req.params;
-  const contact = await ContactModel.findById(contactId);
+  const { _id } = req.user;
+  const contact = await ContactModel.findById({
+    _id: contactId,
+    owner: _id,
+  });
   if (!contact) {
     throw createHttpException(404, "The contact is not found");
   }
