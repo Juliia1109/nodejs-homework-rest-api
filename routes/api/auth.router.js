@@ -1,14 +1,15 @@
 const express = require("express");
 const authController = require("../../controllers/contacts/auth");
 const { controllerExceptionWrapper } = require("../../helpers");
-const { validateBody } = require("../../middlewares");
+const { validateBody, authUser } = require("../../middlewares");
 const {
   userRegisterSchema,
   userLoginSchema,
   userSubscriptionSchema,
 } = require("../../helpers/schemas");
-const { authUser } = require("../../middlewares/auth-user.middleware");
-
+const {
+  upload,
+} = require("../../controllers/contacts/auth/update-avatar.user");
 const router = express.Router();
 
 router
@@ -29,6 +30,12 @@ router
     authUser,
     validateBody(userSubscriptionSchema),
     controllerExceptionWrapper(authController.updateSubscriptionUser)
+  )
+  .patch(
+    "/users/avatars",
+    authUser,
+    upload.single("avatar"),
+    controllerExceptionWrapper(authController.updateAvatarUser)
   );
 
 module.exports = router;
