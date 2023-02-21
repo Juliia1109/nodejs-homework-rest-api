@@ -5,8 +5,8 @@ const Jimp = require("jimp");
 const fsp = require("fs/promises");
 const multer = require("multer");
 
-const tmpDirPath = path.join(__dirname, "tmp");
-const avatarDirPath = path.join(__dirname, "public", "avatars");
+const tmpDirPath = path.join(__dirname, "../../../", "tmp");
+const avatarDirPath = path.join(__dirname, "../../../", "public", "avatars");
 
 const multerConfig = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -34,8 +34,8 @@ const updateAvatarUser = async (req, res, next) => {
       .catch((error) => {
         next(error);
       });
-
-    fsp.rename(req.file.path, avatarDirPath);
+    const avatarPath = `${avatarDirPath}/${req.file.filename}`;
+    fsp.rename(req.file.path, avatarPath);
     const filePath = path.join("avatars", req.file.filename);
 
     await UserModel.findByIdAndUpdate(_id, { avatarURL: filePath });
