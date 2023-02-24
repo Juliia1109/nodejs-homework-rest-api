@@ -12,7 +12,9 @@ const login = async (req, res, next) => {
   if (userInstanceOrNull === null) {
     throw createHttpException(401, "Email or password is wrong");
   }
-
+  if (!userInstanceOrNull.verify) {
+    throw createHttpException(401, "Email is not verified");
+  }
   const isValidPassword = await bcrypt.compare(
     password,
     userInstanceOrNull.password

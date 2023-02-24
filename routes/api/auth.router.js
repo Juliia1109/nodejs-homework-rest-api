@@ -36,6 +36,14 @@ router
     authUser,
     upload.single("avatar"),
     controllerExceptionWrapper(authController.updateAvatarUser)
+  )
+  .get(
+    "/users/verify/:verificationToken",
+    controllerExceptionWrapper(authController.verifyEmail)
+  )
+  .post(
+    "/users/verify",
+    controllerExceptionWrapper(authController.verifyUsers)
   );
 
 module.exports = router;

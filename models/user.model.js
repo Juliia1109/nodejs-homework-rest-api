@@ -19,6 +19,14 @@ const userSchema = mongoose.Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
     token: String,
     avatarURL: String,
   },
